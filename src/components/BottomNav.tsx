@@ -1,0 +1,45 @@
+import React from 'react';
+import { Home, Clipboard, User, HelpCircle } from 'lucide-react';
+type NavItem = 'home' | 'setup' | 'profile' | 'help';
+interface BottomNavProps {
+  active: NavItem;
+  onNavigate: (item: NavItem) => void;
+}
+export function BottomNav({
+  active,
+  onNavigate
+}: BottomNavProps) {
+  const items = [{
+    id: 'home' as NavItem,
+    icon: Home,
+    label: 'Home'
+  }, {
+    id: 'setup' as NavItem,
+    icon: Clipboard,
+    label: 'Setup'
+  }, {
+    id: 'profile' as NavItem,
+    icon: User,
+    label: 'Profile'
+  }, {
+    id: 'help' as NavItem,
+    icon: HelpCircle,
+    label: 'Help'
+  }];
+  return <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 pb-safe z-50">
+      <div className="max-w-4xl mx-auto px-2">
+        <div className="flex items-center justify-around">
+          {items.map(item => {
+          const Icon = item.icon;
+          const isActive = active === item.id;
+          return <button key={item.id} onClick={() => onNavigate(item.id)} className={`flex flex-col items-center py-3 px-4 min-w-[70px] transition-all touch-manipulation ${isActive ? 'text-[#4A90E2]' : 'text-gray-400'}`}>
+                <Icon className={`w-6 h-6 mb-1 transition-transform ${isActive ? 'scale-110' : ''}`} />
+                <span className={`text-xs font-medium ${isActive ? 'font-semibold' : ''}`}>
+                  {item.label}
+                </span>
+              </button>;
+        })}
+        </div>
+      </div>
+    </nav>;
+}

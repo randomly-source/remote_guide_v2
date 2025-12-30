@@ -1,0 +1,111 @@
+
+{
+  "milestones": [
+    {
+      "id": "living-room",
+      "title": "Living Room Setup",
+      "subtitle": "Nano Meter, Remote, Power Sensor",
+      "iconType": "tv",
+      "required": true,
+      "steps": [
+        {
+          "id": "box",
+          "title": "Find the Living Room Box",
+          "description": "Locate the box labeled \"Living Room\". It contains the Nano Meter, Remote, and Power Sensor.",
+          "illustrationType": "box"
+        },
+        {
+          "id": "nano-place",
+          "title": "Place the Nano Meter",
+          "description": "Position the Nano Meter next to your TV. It needs to \"hear\" the audio clearly.",
+          "illustrationType": "nano-meter-tv",
+          "tip": "Make sure it is not blocked by soundbars or decorations."
+        },
+        {
+          "id": "power-sensor",
+          "title": "Connect Power Sensor",
+          "description": "Plug your TV power cord into the Nielsen Power Sensor, then plug the Sensor into the wall.",
+          "illustrationType": "power-sensor",
+          "tip": "This helps us know exactly when the TV is on or off."
+        },
+        {
+          "id": "remote",
+          "title": "Place the Remote",
+          "description": "Set the People Meter Remote near the Nano Meter for easy access.",
+          "illustrationType": "remote"
+        }
+      ]
+    },
+    {
+      "id": "hub",
+      "title": "The Hub",
+      "subtitle": "Cellular backup connection",
+      "iconType": "hub",
+      "required": true,
+      "steps": [
+        {
+          "id": "hub-place",
+          "title": "Find a Central Spot",
+          "description": "Choose a location central to all your TVs where you get good cell signal.",
+          "illustrationType": "hub",
+          "tip": "Avoid placing it in a cabinet or behind furniture."
+        },
+        {
+          "id": "hub-plug",
+          "title": "Plug it In",
+          "description": "Connect the Hub to a power outlet. Look for the blinking lights indicating it has power.",
+          "illustrationType": "hub-animated",
+          "tip": "Do not use an outlet controlled by a light switch."
+        }
+      ]
+    },
+    {
+      "id": "streaming",
+      "title": "Streaming Meter",
+      "subtitle": "WiFi router connection",
+      "iconType": "streaming-meter",
+      "required": true,
+      "steps": [
+        {
+          "id": "stream-place",
+          "title": "Next to Router",
+          "description": "Place the Streaming Meter next to your home WiFi router.",
+          "illustrationType": "streaming-meter-router"
+        },
+        {
+          "id": "stream-connect",
+          "title": "Connect Ethernet",
+          "description": "Plug the attached ethernet cable into any open port on your router.",
+          "illustrationType": "streaming-meter-connected"
+        },
+        {
+          "id": "stream-power",
+          "title": "Power Up",
+          "description": "Plug the power adapter into a wall outlet. Green lights will flash when ready.",
+          "illustrationType": "streaming-meter"
+        }
+      ]
+    },
+    {
+      "id": "bedroom",
+      "title": "Bedroom TV",
+      "subtitle": "Second TV setup",
+      "iconType": "tv",
+      "required": true,
+      "steps": [
+        {
+          "id": "bed-box",
+          "title": "Find Bedroom Box",
+          "description": "Locate the box labeled \"Bedroom\".",
+          "illustrationType": "box"
+        },
+        {
+          "id": "bed-nano",
+          "title": "Setup Nano Meter",
+          "description": "Just like the living room, place the Nano Meter near the TV.",
+          "illustrationType": "nano-meter"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Increase base font size for better readability */
+  html {
+    font-size: 18px; /* Default is 16px, this increases all rem-based sizes by 12.5% */
+    overflow-y: auto; /* Only show scrollbar when content overflows */
+  }
+  
+  body {
+    overflow-y: auto; /* Only show scrollbar when content overflows */
+  }
+  
+  /* Adjust for mobile devices */
+  @media (max-width: 640px) {
+    html {
+      font-size: 17px; /* Slightly smaller on mobile for better fit */
+    }
+  }
+}
+
+@layer utilities {
+  .animate-pulse-slow {
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
