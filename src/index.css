@@ -16,6 +16,15 @@
   
   body {
     overflow-y: auto; /* Only show scrollbar when content overflows */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  
+  /* Ensure proper padding on mobile */
+  @media (max-width: 640px) {
+    body {
+      padding-left: env(safe-area-inset-left, 0);
+      padding-right: env(safe-area-inset-right, 0);
+    }
   }
   
   /* Adjust for mobile devices */

@@ -313,8 +313,8 @@ export function SetupGuide({
       // Could auto-advance to phase2 or show completion button
     }
   }, [view, allRequiredDone]);
-  return <div className="pb-12">
-      {view === 'journey' && <div className="space-y-8">
+  return <div className="pb-12 w-full box-border">
+      {view === 'journey' && <div className="space-y-8 w-full">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
               Let's Get You Set Up
@@ -323,6 +323,7 @@ export function SetupGuide({
             {/* Combined Box Preview Card */}
             <BoxPreviewCard
               householdConfig={mockHouseholdConfig}
+              onModalStateChange={onModalStateChange}
             />
           </div>
 

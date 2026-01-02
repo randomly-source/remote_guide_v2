@@ -15,6 +15,7 @@ import {
 
 interface BoxPreviewCardProps {
   householdConfig: HouseholdConfig;
+  onModalStateChange?: (isOpen: boolean) => void;
 }
 
 // Meter descriptions mapping
@@ -36,12 +37,18 @@ const meterIcons: Record<string, React.ComponentType<{ className?: string }>> = 
 };
 
 export function BoxPreviewCard({
-  householdConfig
+  householdConfig,
+  onModalStateChange
 }: BoxPreviewCardProps) {
   const boxes = getBoxOrganization(householdConfig);
   const roomsWithTVs = householdConfig.rooms.filter(room => room.hasTV);
   const [showBoxModal, setShowBoxModal] = useState(false);
   const [expandedBoxes, setExpandedBoxes] = useState<Set<number>>(new Set());
+
+  // Notify parent when modal state changes
+  React.useEffect(() => {
+    onModalStateChange?.(showBoxModal);
+  }, [showBoxModal, onModalStateChange]);
 
   const toggleBox = (index: number) => {
     setExpandedBoxes(prev => {
@@ -246,7 +253,7 @@ export function BoxPreviewCard({
               </div>
 
               {/* Sticky CTA */}
-              <div className="flex-shrink-0 p-4 bg-white border-t border-gray-200">
+              <div className="flex-shrink-0 p-4 pb-safe bg-white border-t border-gray-200">
                 <Button
                   onClick={() => setShowBoxModal(false)}
                   fullWidth

@@ -46,7 +46,7 @@ export function PhoneFrame({ children }: PhoneFrameProps) {
     <>
       {/* Mobile: Full width, no frame */}
       <PhoneFrameContext.Provider value={{ scrollContainerRef: null, isInFrame: false }}>
-        <div className="md:hidden w-full">
+        <div className="md:hidden w-full overflow-x-hidden">
           {children}
         </div>
       </PhoneFrameContext.Provider>

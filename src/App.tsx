@@ -64,7 +64,7 @@ export function App() {
         </header>}
 
       {/* Main Content */}
-      <main className="max-w-4xl md:max-w-full mx-auto px-4 sm:px-6 py-6">
+      <main className="max-w-4xl md:max-w-full mx-auto px-4 sm:px-6 py-6 w-full box-border overflow-x-hidden">
         {currentView === 'home' && <div className="pb-32">
             <HomePage onStartSetup={() => setCurrentView('setup')} onViewEquipment={() => setShowEquipmentModal(true)} onViewProfile={() => setCurrentView('profile')} onModalStateChange={setAnyModalOpen} onStickyCTAChange={setShowStickyCTA} />
           </div>}
@@ -155,12 +155,12 @@ export function App() {
           </div>
         </div>}
 
-      {/* Bottom Navigation - Always show on setup/profile/help pages, on home page show unless modals/sticky CTA are active (only hide sticky CTA if user has scrolled) */}
-      {(
-        currentView === 'setup' || 
+      {/* Bottom Navigation - Hide when modals are open, show on setup/profile/help pages otherwise, on home page show unless modals/sticky CTA are active */}
+      {!anyModalOpen && !showEquipmentModal && (
+        (currentView === 'setup' || 
         currentView === 'profile' || 
         currentView === 'help' || 
-        (currentView === 'home' && (!showEquipmentModal && !anyModalOpen && (!showStickyCTA || !hasScrolled)))
+        (currentView === 'home' && (!showStickyCTA || !hasScrolled)))
       ) && <BottomNav active={currentView} onNavigate={setCurrentView} />}
     </div>
   </PhoneFrame>;
