@@ -880,6 +880,39 @@ export function ProfileConfirmation({
                 </select>
               </div>
               <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Reception Types</label>
+                <div className="space-y-2 border border-gray-200 rounded-lg p-3 bg-gray-50">
+                  {(['OTA', 'Cable', 'DBS', 'MA_TV', 'SMA_TV', 'MMDS', 'Broadband'] as const).map((type) => (
+                    <label
+                      key={type}
+                      className="flex items-center gap-3 p-2 rounded-md hover:bg-white cursor-pointer transition-colors"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={site.receptionTypes.includes(type)}
+                        onChange={(e) => {
+                          const updated = [...sitesEditData];
+                          if (e.target.checked) {
+                            updated[idx] = {
+                              ...updated[idx],
+                              receptionTypes: [...updated[idx].receptionTypes, type]
+                            };
+                          } else {
+                            updated[idx] = {
+                              ...updated[idx],
+                              receptionTypes: updated[idx].receptionTypes.filter(t => t !== type)
+                            };
+                          }
+                          setSitesEditData(updated);
+                        }}
+                        className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 cursor-pointer"
+                      />
+                      <span className="text-sm text-gray-900 flex-1">{type}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">TV Make</label>
                 <input
                   type="text"
