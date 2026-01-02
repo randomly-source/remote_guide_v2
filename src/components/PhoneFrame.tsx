@@ -25,6 +25,10 @@ export function PhoneFrame({ children }: PhoneFrameProps) {
     const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
       if (e.matches) {
         document.documentElement.classList.add('phone-frame-active');
+        // Force mobile viewport behavior inside phone frame
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.closest('.phone-frame-mobile')?.classList.add('force-mobile');
+        }
       } else {
         document.documentElement.classList.remove('phone-frame-active');
       }
@@ -71,7 +75,8 @@ export function PhoneFrame({ children }: PhoneFrameProps) {
                   className="phone-frame-content w-full h-full overflow-y-auto overflow-x-hidden relative"
                 >
                   {/* Content wrapper - sticky elements will stick relative to this container */}
-                  <div className="pt-[45px] min-h-full flex flex-col">
+                  {/* phone-frame-mobile class forces all responsive breakpoints to behave as mobile */}
+                  <div className="phone-frame-mobile pt-[45px] min-h-full flex flex-col">
                     {children}
                   </div>
                 </div>

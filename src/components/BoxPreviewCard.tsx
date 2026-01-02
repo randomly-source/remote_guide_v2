@@ -83,7 +83,7 @@ export function BoxPreviewCard({
         {/* Section 1: Here's what you told us */}
         <div className="mb-4 pb-4 border-b border-gray-200">
           <h4 className="text-sm font-semibold text-gray-900 mb-3">
-            Here's what you told us
+            This is what we know about your TVs and internet
           </h4>
           <div className="flex flex-wrap gap-2 mb-2">
             {roomsWithTVs.map((room, idx) => (
@@ -127,13 +127,13 @@ export function BoxPreviewCard({
             onClick={() => setShowBoxModal(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
               transition={{
                 type: 'spring',
-                stiffness: 300,
-                damping: 30
+                damping: 30,
+                stiffness: 300
               }}
               className="bg-[#F5F3F0] w-full sm:max-w-3xl sm:rounded-3xl rounded-t-3xl max-h-[90vh] flex flex-col shadow-2xl"
               onClick={e => e.stopPropagation()}

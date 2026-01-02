@@ -106,3 +106,90 @@
     background-color: rgba(156, 163, 175, 0.7);
   }
 }
+
+/* Force mobile breakpoints inside phone frame */
+/* Override all Tailwind responsive breakpoints to behave as mobile */
+.phone-frame-mobile {
+  /* Set a max-width context to force mobile breakpoints */
+  max-width: 390px;
+  width: 100%;
+  /* Force all children to use mobile breakpoints */
+  font-size: 17px;
+}
+
+/* Disable all md: (768px+) breakpoints inside phone frame */
+/* Force mobile-only rendering regardless of actual viewport size */
+/* This is applied when viewport is desktop but we're inside phone frame */
+@media (min-width: 768px) {
+  /* Hide desktop-only elements */
+  .phone-frame-mobile .md\:hidden {
+    display: none !important;
+  }
+  
+  /* Show mobile elements even when md: classes say to hide */
+  .phone-frame-mobile .md\:flex {
+    display: none !important;
+  }
+  
+  .phone-frame-mobile .md\:block {
+    display: none !important;
+  }
+  
+  /* Override max-width utilities - force mobile widths */
+  .phone-frame-mobile .md\:max-w-full,
+  .phone-frame-mobile .md\:max-w-2xl,
+  .phone-frame-mobile .md\:max-w-4xl {
+    max-width: 100% !important;
+  }
+  
+  /* Override layout utilities */
+  .phone-frame-mobile .md\:items-center {
+    align-items: flex-start !important;
+  }
+  
+  .phone-frame-mobile .md\:justify-center {
+    justify-content: flex-start !important;
+  }
+  
+  /* Override spacing - use mobile values */
+  .phone-frame-mobile .md\:p-4,
+  .phone-frame-mobile .md\:p-6 {
+    padding: 1rem !important;
+  }
+  
+  .phone-frame-mobile .md\:px-6 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .phone-frame-mobile .md\:py-6 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  /* Override typography - use mobile sizes */
+  .phone-frame-mobile .md\:text-xl {
+    font-size: 1.125rem !important;
+  }
+  
+  .phone-frame-mobile .md\:text-2xl {
+    font-size: 1.5rem !important;
+  }
+  
+  .phone-frame-mobile .md\:text-3xl {
+    font-size: 1.875rem !important;
+  }
+  
+  /* Override border radius */
+  .phone-frame-mobile .md\:rounded-3xl {
+    border-radius: 1rem !important;
+  }
+  
+  /* Disable desktop animations */
+  .phone-frame-mobile .md\:slide-in-from-bottom-0 {
+    animation: none !important;
+  }
+  
+  /* Ensure sm: breakpoints still work (they're mobile-friendly) */
+  /* sm: breakpoints (640px+) should work normally inside phone frame */
+}

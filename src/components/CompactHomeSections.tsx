@@ -230,7 +230,7 @@ export function CompactHomeSections({
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <h3 className="font-bold text-gray-900 text-lg">
-                    Pride in Being Chosen
+                    Win Small Rewards as a Token of Appreciation
                   </h3>
                   <motion.div
                     animate={{ rotate: expandedCards.has('card3') ? 180 : 0 }}
@@ -249,7 +249,7 @@ export function CompactHomeSections({
                       transition={{ duration: 0.2 }}
                       className="text-sm sm:text-base text-gray-700 leading-relaxed overflow-hidden"
                     >
-                      You've been selected to be part of an exclusive group. Only 42,000 households across America have this opportunity. Your participation makes a real difference in how entertainment is created and distributed.
+                      As a token of our appreciation for your participation, you'll have opportunities to win small rewards throughout your time with Nielsen. These rewards are our way of saying thank you for helping shape the future of entertainment.
                     </motion.p>
                   )}
                 </AnimatePresence>

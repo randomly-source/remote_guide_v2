@@ -50,8 +50,8 @@ export function SetupStep({
   };
   return <>
       <div className="flex flex-col max-w-2xl md:max-w-full mx-auto">
-        {/* Modal Header - Like Equipment Modal */}
-        <div className="flex-shrink-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex items-center justify-between -mx-4 sm:-mx-6 -mt-6 mb-6 sm:mb-8 sticky top-0 z-10">
+        {/* Modal Header - Sticky at top */}
+        <div className="flex-shrink-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex items-center justify-between -mx-4 sm:-mx-6 -mt-6 mb-0 z-10 rounded-t-xl sm:rounded-t-2xl sticky top-0">
           <div className="flex items-center gap-3">
             <button onClick={onBack} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 active:scale-95 transition-all" aria-label="Go back">
               <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -67,58 +67,61 @@ export function SetupStep({
           </button>
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div key={step.id} initial={{
-          opacity: 0,
-          x: 20
-        }} animate={{
-          opacity: 1,
-          x: 0
-        }} exit={{
-          opacity: 0,
-          x: -20
-        }} transition={{
-          duration: 0.3
-        }} className="flex-1 flex flex-col pb-24">
-            {/* Illustration Area */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 mb-6 sm:mb-8 flex items-center justify-center shadow-sm border border-gray-100 min-h-[240px] sm:min-h-[300px]">
-              <div className="text-[#2D3748] scale-125 sm:scale-150">
-                {step.illustration}
+        {/* Content Area - scrolls within the page */}
+        <div className="px-4 sm:px-6 -mx-4 sm:-mx-6 pb-24">
+          <AnimatePresence mode="wait">
+            <motion.div key={step.id} initial={{
+            opacity: 0,
+            x: 20
+          }} animate={{
+            opacity: 1,
+            x: 0
+          }} exit={{
+            opacity: 0,
+            x: -20
+          }} transition={{
+            duration: 0.3
+          }} className="flex flex-col py-6">
+              {/* Illustration Area */}
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 pt-12 sm:pt-16 mt-6 sm:mt-8 mb-6 sm:mb-8 flex items-center justify-center shadow-sm border border-gray-100 min-h-[240px] sm:min-h-[300px]">
+                <div className="text-[#2D3748] scale-125 sm:scale-150">
+                  {step.illustration}
+                </div>
               </div>
-            </div>
 
-            {/* Instructions */}
-            <div className="flex-1">
-              <h3 className="text-xl sm:text-2xl font-bold text-[#2D3748] mb-3 sm:mb-4">
-                {step.title}
-              </h3>
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-4 sm:mb-6">
-                {step.description}
-              </p>
+              {/* Instructions */}
+              <div className="flex-1 pb-24">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#2D3748] mb-3 sm:mb-4">
+                  {step.title}
+                </h3>
+                <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-4 sm:mb-6">
+                  {step.description}
+                </p>
 
-              {step.tip && <div className="bg-yellow-50 text-yellow-800 p-4 rounded-xl text-sm flex items-start gap-3">
-                  <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {step.tip}
-                </div>}
+                {step.tip && <div className="bg-yellow-50 text-yellow-800 p-4 rounded-xl text-sm flex items-start gap-3">
+                    <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {step.tip}
+                  </div>}
 
-              {/* Completed Task Message */}
-              {isCompleted && <motion.div initial={{
-              opacity: 0,
-              y: 10
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} className="bg-green-50 border border-green-200 text-green-800 p-4 rounded-xl text-sm flex items-start gap-3 mt-4">
-                  <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5 text-green-600" />
-                  <p className="font-medium">
-                    You've already completed this task! Great job! 🎉
-                  </p>
-                </motion.div>}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+                {/* Completed Task Message */}
+                {isCompleted && <motion.div initial={{
+                opacity: 0,
+                y: 10
+              }} animate={{
+                opacity: 1,
+                y: 0
+              }} className="bg-green-50 border border-green-200 text-green-800 p-4 rounded-xl text-sm flex items-start gap-3 mt-4">
+                    <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5 text-green-600" />
+                    <p className="font-medium">
+                      You've already completed this task! Great job! 🎉
+                    </p>
+                  </motion.div>}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Progress Indicators - Above the button container */}
         <div className="fixed bottom-[100px] left-0 right-0 z-[55] pb-safe">
