@@ -14,10 +14,7 @@ import {
   Tv,
   Smartphone,
   Edit3,
-  CheckSquare,
-  AlertTriangle,
-  ChevronLeft,
-  ChevronRight
+  CheckSquare
 } from 'lucide-react';
 
 interface ProfileConfirmationProps {
@@ -69,12 +66,6 @@ export function ProfileConfirmation({
     }
   };
 
-  const handleBack = () => {
-    if (currentSectionIndex > 0) {
-      setCurrentSectionIndex(prev => prev - 1);
-    }
-  };
-
   const toggleSectionConfirmation = (sectionId: string) => {
     setConfirmedSections(prev => {
       const next = new Set(prev);
@@ -82,6 +73,12 @@ export function ProfileConfirmation({
         next.delete(sectionId);
       } else {
         next.add(sectionId);
+        // Auto-advance to next section if not the last one
+        if (currentSectionIndex < totalSections - 1) {
+          setTimeout(() => {
+            setCurrentSectionIndex(prev => prev + 1);
+          }, 300); // Small delay for visual feedback
+        }
       }
       return next;
     });
@@ -396,7 +393,7 @@ export function ProfileConfirmation({
   );
 
   const renderSitesSection = () => (
-    <Card className="overflow-hidden shadow-sm">
+    <Card className="overflow-hidden shadow-sm w-full">
       <div className="flex items-center justify-between p-5 border-b border-gray-100">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
@@ -421,71 +418,72 @@ export function ProfileConfirmation({
           </Button>
         </div>
       </div>
-      <div className="p-5 space-y-4">
+      <div className="p-5 sm:p-6 space-y-4 w-full">
         {editedProfile.sites.map((site) => (
-          <Card key={site.id} className="bg-gray-50 border-l-4 border-l-blue-500">
-            <div className="space-y-4">
-              <h4 className="font-semibold text-gray-900 text-base pb-2 border-b border-gray-200">
-                {site.label}
-              </h4>
-              <FieldGroup title="Site Information">
-                <FieldRow label="Site Label" value={site.label} />
-                <FieldRow label="Metered" value={site.metered ? 'Yes' : 'No'} />
-                <FieldRow label="Reception Types" value={site.receptionTypes.join(', ')} />
-              </FieldGroup>
-              <FieldGroup title="TV Details">
-                {site.tvDetails.make && (
-                  <FieldRow label="TV Make" value={site.tvDetails.make} />
-                )}
-                {site.tvDetails.hdCapable !== undefined && (
-                  <FieldRow label="HD Capable" value={site.tvDetails.hdCapable ? 'Yes' : 'No'} />
-                )}
-                {site.tvDetails.internetStatus && (
-                  <FieldRow label="Internet Status" value={site.tvDetails.internetStatus} />
-                )}
-              </FieldGroup>
-              <FieldGroup title="Connected Devices">
+          <div key={site.id} className="bg-gray-50 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5 space-y-3 w-full">
+            <h4 className="font-semibold text-gray-900 text-base">{site.label}</h4>
+            
+            <div className="space-y-2 text-sm w-full">
+              <div className="flex justify-between items-center w-full gap-4">
+                <span className="text-gray-600 shrink-0">Metered:</span>
+                <span className="text-gray-900 font-medium text-right flex-1">{site.metered ? 'Yes' : 'No'}</span>
+              </div>
+              <div className="flex justify-between items-center w-full gap-4">
+                <span className="text-gray-600 shrink-0">Reception:</span>
+                <span className="text-gray-900 font-medium text-right flex-1 break-words">{site.receptionTypes.join(', ')}</span>
+              </div>
+              {site.tvDetails.make && (
+                <div className="flex justify-between items-center w-full gap-4">
+                  <span className="text-gray-600 shrink-0">TV Make:</span>
+                  <span className="text-gray-900 font-medium text-right flex-1">{site.tvDetails.make}</span>
+                </div>
+              )}
+              {site.tvDetails.hdCapable !== undefined && (
+                <div className="flex justify-between items-center w-full gap-4">
+                  <span className="text-gray-600 shrink-0">HD Capable:</span>
+                  <span className="text-gray-900 font-medium text-right flex-1">{site.tvDetails.hdCapable ? 'Yes' : 'No'}</span>
+                </div>
+              )}
+              {site.tvDetails.internetStatus && (
+                <div className="flex justify-between items-center w-full gap-4">
+                  <span className="text-gray-600 shrink-0">Internet:</span>
+                  <span className="text-gray-900 font-medium text-right flex-1 break-words">{site.tvDetails.internetStatus}</span>
+                </div>
+              )}
+            </div>
+
+            {(site.connectedDevices.setTopBox?.present || 
+              site.connectedDevices.streamingDevice?.present || 
+              site.connectedDevices.gameSystem?.present) && (
+              <div className="pt-2 border-t border-gray-200 space-y-2 w-full">
                 {site.connectedDevices.setTopBox?.present && (
-                  <div className="p-3 bg-white rounded-lg border border-gray-200">
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                      Set-Top Box
-                    </p>
-                    <p className="text-sm font-medium text-gray-900">
+                  <div className="text-sm flex justify-between items-center w-full gap-4">
+                    <span className="text-gray-600 shrink-0">Set-Top Box:</span>
+                    <span className="text-gray-900 font-medium text-right flex-1">
                       {site.connectedDevices.setTopBox.make || 'STB'}
                       {site.connectedDevices.setTopBox.hdCapable && ' (HD)'}
                       {site.connectedDevices.setTopBox.dvrCapable && ' (DVR)'}
-                    </p>
+                    </span>
                   </div>
                 )}
                 {site.connectedDevices.streamingDevice?.present && (
-                  <div className="p-3 bg-white rounded-lg border border-gray-200">
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                      Streaming Device
-                    </p>
-                    <p className="text-sm font-medium text-gray-900">
+                  <div className="text-sm flex justify-between items-center w-full gap-4">
+                    <span className="text-gray-600 shrink-0">Streaming:</span>
+                    <span className="text-gray-900 font-medium text-right flex-1 break-words">
                       {site.connectedDevices.streamingDevice.device}
                       {site.connectedDevices.streamingDevice.internetEnabled && ' (Internet Enabled)'}
-                    </p>
+                    </span>
                   </div>
                 )}
                 {site.connectedDevices.gameSystem?.present && (
-                  <div className="p-3 bg-white rounded-lg border border-gray-200">
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                      Game System
-                    </p>
-                    <p className="text-sm font-medium text-gray-900">
-                      {site.connectedDevices.gameSystem.device}
-                    </p>
+                  <div className="text-sm flex justify-between items-center w-full gap-4">
+                    <span className="text-gray-600 shrink-0">Game System:</span>
+                    <span className="text-gray-900 font-medium text-right flex-1">{site.connectedDevices.gameSystem.device}</span>
                   </div>
                 )}
-                {(!site.connectedDevices.setTopBox?.present && 
-                  !site.connectedDevices.streamingDevice?.present && 
-                  !site.connectedDevices.gameSystem?.present) && (
-                  <p className="text-sm text-gray-500 italic">No connected devices</p>
-                )}
-              </FieldGroup>
-            </div>
-          </Card>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </Card>
@@ -604,11 +602,17 @@ export function ProfileConfirmation({
       </div>
 
       {/* Progress Bar */}
-      <ProgressBar
-        sections={sectionPages}
-        currentIndex={currentSectionIndex}
-        confirmedSections={confirmedSections}
-      />
+      <div>
+        <ProgressBar
+          sections={sectionPages}
+          currentIndex={currentSectionIndex}
+          confirmedSections={confirmedSections}
+          onSectionClick={(index) => setCurrentSectionIndex(index)}
+        />
+        <p className="text-xs text-gray-500 text-center mt-2">
+          💡 Tip: Click on any section in the progress bar above to navigate
+        </p>
+      </div>
 
       {/* Current Section */}
       <div className="min-h-[400px]">
@@ -617,68 +621,38 @@ export function ProfileConfirmation({
 
       {/* Confirm Button */}
       <div className="pt-4">
-        <Button
-          variant={isCurrentSectionConfirmed ? 'secondary' : 'primary'}
-          fullWidth
-          onClick={() => toggleSectionConfirmation(currentSectionId)}
-          className="text-sm h-12"
-        >
-          {isCurrentSectionConfirmed ? (
-            <>
-              <CheckSquare className="w-5 h-5 mr-2" />
-              Section Confirmed
-            </>
-          ) : (
-            <>
-              <CheckSquare className="w-5 h-5 mr-2" />
-              Confirm This Section
-            </>
-          )}
-        </Button>
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="flex gap-3 pt-4 border-t border-gray-200">
-        <Button
-          variant="secondary"
-          onClick={handleBack}
-          disabled={isFirstSection}
-          className="flex-1"
-        >
-          <ChevronLeft className="w-4 h-4 mr-1" />
-          Back
-        </Button>
-        {isLastSection ? (
+        {isLastSection && confirmedSections.size === totalSections ? (
           <Button
             variant="primary"
             onClick={handleSave}
-            disabled={!isCurrentSectionConfirmed || confirmedSections.size !== totalSections}
-            className="flex-1"
+            fullWidth
+            className="text-sm h-12"
           >
-            {confirmedSections.size === totalSections ? (
-              <>
-                <CheckCircle2 className="w-5 h-5 mr-2" />
-                Save All Changes
-              </>
-            ) : (
-              <>
-                <AlertTriangle className="w-5 h-5 mr-2" />
-                Complete All Sections
-              </>
-            )}
+            <CheckCircle2 className="w-5 h-5 mr-2" />
+            Save All Changes
           </Button>
         ) : (
           <Button
-            variant="primary"
-            onClick={handleNext}
-            disabled={!isCurrentSectionConfirmed}
-            className="flex-1"
+            variant={isCurrentSectionConfirmed ? 'secondary' : 'primary'}
+            fullWidth
+            onClick={() => toggleSectionConfirmation(currentSectionId)}
+            className="text-sm h-12"
           >
-            Next
-            <ChevronRight className="w-4 h-4 ml-1" />
+            {isCurrentSectionConfirmed ? (
+              <>
+                <CheckSquare className="w-5 h-5 mr-2" />
+                Section Confirmed
+              </>
+            ) : (
+              <>
+                <CheckSquare className="w-5 h-5 mr-2" />
+                Confirm This Section
+              </>
+            )}
           </Button>
         )}
       </div>
+
 
       {/* Edit Modals */}
       {/* Household Edit Modal */}

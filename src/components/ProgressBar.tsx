@@ -11,12 +11,14 @@ interface ProgressBarProps {
   sections: Section[];
   currentIndex: number;
   confirmedSections: Set<string>;
+  onSectionClick?: (index: number) => void;
 }
 
 export function ProgressBar({
   sections,
   currentIndex,
-  confirmedSections
+  confirmedSections,
+  onSectionClick
 }: ProgressBarProps) {
   const totalSections = sections.length;
   const progressPercentage = ((currentIndex + 1) / totalSections) * 100;
@@ -53,11 +55,13 @@ export function ProgressBar({
           const isCurrent = index === currentIndex;
           const isCompleted = confirmedSections.has(section.id);
           const isPast = index < currentIndex;
+          const isClickable = onSectionClick !== undefined;
 
           return (
             <div
               key={section.id}
-              className="flex flex-col items-center gap-1 flex-1"
+              className="flex flex-col items-center gap-1 flex-1 cursor-pointer"
+              onClick={() => isClickable && onSectionClick?.(index)}
             >
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
@@ -68,7 +72,7 @@ export function ProgressBar({
                     : isPast
                     ? 'bg-gray-300 text-gray-600'
                     : 'bg-gray-200 text-gray-400'
-                }`}
+                } ${isClickable && !isCurrent ? 'hover:scale-105 hover:shadow-md' : ''}`}
               >
                 {isCompleted ? (
                   <CheckCircle2 className="w-5 h-5" />
@@ -83,7 +87,7 @@ export function ProgressBar({
                     : isCompleted
                     ? 'font-medium text-green-600'
                     : 'text-gray-500'
-                }`}
+                } ${isClickable && !isCurrent ? 'hover:text-gray-700' : ''}`}
               >
                 {section.shortLabel || section.label}
               </span>

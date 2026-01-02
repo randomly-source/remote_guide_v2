@@ -63,10 +63,10 @@ export function FieldRow({ label, value, className = '', formatValue }: FieldRow
 
   return (
     <div className={`flex items-start justify-between gap-4 py-2 border-b border-gray-100 last:border-0 ${className}`}>
-      <label className="text-xs font-medium text-gray-500 uppercase tracking-wider shrink-0">
+      <label className="text-xs font-medium text-gray-500 uppercase tracking-wider shrink-0 min-w-[120px]">
         {label}
       </label>
-      <p className="text-sm font-medium text-gray-900 text-right">
+      <p className="text-sm font-medium text-gray-900 text-right flex-1 break-words">
         {displayValue}
       </p>
     </div>
