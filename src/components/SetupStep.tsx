@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from './ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2 } from 'lucide-react';
+import { useSwipeGesture } from '../hooks/useSwipeGesture';
 export interface StepData {
   id: string;
   title: string;
@@ -48,8 +49,21 @@ export function SetupStep({
       onClose();
     }
   };
+
+  // Add swipe gesture for back navigation
+  const swipeRef = useSwipeGesture({
+    onSwipeLeft: onBack,
+    enabled: !showExitDialog // Disable when exit dialog is open
+  });
+
+  // Add swipe gesture to exit dialog
+  const exitDialogSwipeRef = useSwipeGesture({
+    onSwipeLeft: handleContinue, // Close dialog on swipe
+    enabled: showExitDialog
+  });
+
   return <>
-      <div className="flex flex-col max-w-2xl md:max-w-full mx-auto">
+      <div ref={swipeRef} className="flex flex-col max-w-2xl md:max-w-full mx-auto">
         {/* Modal Header - Sticky at top */}
         <div className="flex-shrink-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex items-center justify-between -mx-4 sm:-mx-6 -mt-6 mb-0 z-10 rounded-t-xl sm:rounded-t-2xl sticky top-0">
           <div className="flex items-center gap-3">
@@ -146,7 +160,9 @@ export function SetupStep({
 
       {/* Exit Confirmation Dialog */}
       <AnimatePresence>
-        {showExitDialog && <motion.div initial={{
+        {showExitDialog && <motion.div 
+          ref={exitDialogSwipeRef}
+          initial={{
         opacity: 0
       }} animate={{
         opacity: 1

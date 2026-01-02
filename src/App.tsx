@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { HomePage } from './pages/HomePage';
 import { SetupGuide } from './pages/SetupGuide';
 import { OnboardingPage } from './pages/OnboardingPage';
@@ -9,20 +9,57 @@ import { PhoneFrame } from './components/PhoneFrame';
 import { Card } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { HelpCircle, Phone, MessageCircle, X } from 'lucide-react';
+import { NavigationProvider, useNavigation } from './contexts/NavigationContext';
+import { useSwipeGesture } from './hooks/useSwipeGesture';
+
 type View = 'home' | 'setup' | 'profile' | 'help';
-export function App() {
-  const [currentView, setCurrentView] = useState<View>('home');
+
+// Equipment Modal Component with swipe support
+function EquipmentModalContent({ onClose }: { onClose: () => void }) {
+  const modalSwipeRef = useSwipeGesture({
+    onSwipeLeft: onClose,
+    enabled: true
+  });
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div 
+        ref={modalSwipeRef}
+        className="bg-[#F5F3F0] w-full sm:max-w-2xl sm:rounded-3xl rounded-t-3xl max-h-[90vh] flex flex-col animate-in slide-in-from-bottom-10 sm:slide-in-from-bottom-0"
+      >
+        <div className="flex-shrink-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex items-center justify-between rounded-t-3xl">
+          <h2 className="text-xl font-bold text-gray-900">
+            What's in the Box?
+          </h2>
+          <button onClick={onClose} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 active:scale-95 transition-all">
+            <X className="w-5 h-5 text-gray-600" />
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+          <EquipmentOverview />
+        </div>
+
+        {/* Sticky CTA */}
+        <div className="flex-shrink-0 p-4 bg-white border-t border-gray-200">
+          <Button onClick={onClose} fullWidth className="h-12 text-base font-semibold">
+            Got it, close
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AppContent() {
+  const { currentView, navigateTo } = useNavigation();
   const [showEquipmentModal, setShowEquipmentModal] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(true);
   const [anyModalOpen, setAnyModalOpen] = useState(false);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
-  // Check if onboarding was already completed
-  useEffect(() => {
-    const onboardingCompleted = localStorage.getItem('nielsen-onboarding-completed');
-    if (onboardingCompleted === 'true') {
-      setShowOnboarding(false);
-    }
-  }, []);
+  
+  // Sync navigation context with local state
+  const setCurrentView = useCallback((view: View) => {
+    navigateTo(view);
+  }, [navigateTo]);
 
   // Reset sticky CTA when leaving home page
   useEffect(() => {
@@ -30,17 +67,35 @@ export function App() {
       setShowStickyCTA(false);
     }
   }, [currentView]);
-  const handleOnboardingComplete = () => {
-    localStorage.setItem('nielsen-onboarding-completed', 'true');
-    setShowOnboarding(false);
-  };
-  if (showOnboarding) {
-    return <PhoneFrame>
-      <OnboardingPage onComplete={handleOnboardingComplete} />
-    </PhoneFrame>;
-  }
+
+  // Handle back navigation with priority: modals first, then pages
+  const handleBackNavigation = useCallback(() => {
+    // Priority 1: Close modals
+    if (showEquipmentModal) {
+      setShowEquipmentModal(false);
+      return;
+    }
+    if (anyModalOpen) {
+      // Modals are handled by their respective components
+      return;
+    }
+    
+    // Priority 2: Page navigation (delegated to SetupGuide if in setup view)
+    // This will be handled by SetupGuide's own back navigation
+    // For other views, go back in history
+    if (currentView !== 'setup' && currentView !== 'home') {
+      setCurrentView('home');
+    }
+  }, [showEquipmentModal, anyModalOpen, currentView, setCurrentView]);
+
+  // Add swipe gesture to main content area
+  const swipeRef = useSwipeGesture({
+    onSwipeLeft: handleBackNavigation,
+    enabled: true
+  });
+
   return <PhoneFrame>
-    <div className="min-h-screen bg-[#F5F3F0] text-[#2D3748] font-sans selection:bg-blue-100 flex flex-col">
+    <div ref={swipeRef} className="min-h-screen bg-[#F5F3F0] text-[#2D3748] font-sans selection:bg-blue-100 flex flex-col">
       {/* Header - only show on home page */}
       {currentView === 'home' && <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
           <div className="max-w-4xl md:max-w-full mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
@@ -61,7 +116,7 @@ export function App() {
             <HomePage onStartSetup={() => setCurrentView('setup')} onViewEquipment={() => setShowEquipmentModal(true)} onViewProfile={() => setCurrentView('profile')} onModalStateChange={setAnyModalOpen} onStickyCTAChange={setShowStickyCTA} />
           </div>}
 
-        {currentView === 'setup' && <SetupGuide onModalStateChange={setAnyModalOpen} />}
+        {currentView === 'setup' && <SetupGuide onModalStateChange={setAnyModalOpen} onBackNavigation={handleBackNavigation} />}
 
         {currentView === 'profile' && <div className="pb-24">
             <ProfileConfirmation onModalStateChange={setAnyModalOpen} />
@@ -121,28 +176,7 @@ export function App() {
       </main>
 
       {/* Equipment Modal */}
-      {showEquipmentModal && <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-          <div className="bg-[#F5F3F0] w-full sm:max-w-2xl sm:rounded-3xl rounded-t-3xl max-h-[90vh] flex flex-col animate-in slide-in-from-bottom-10 sm:slide-in-from-bottom-0">
-            <div className="flex-shrink-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex items-center justify-between rounded-t-3xl">
-              <h2 className="text-xl font-bold text-gray-900">
-                What's in the Box?
-              </h2>
-              <button onClick={() => setShowEquipmentModal(false)} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 active:scale-95 transition-all">
-                <X className="w-5 h-5 text-gray-600" />
-              </button>
-            </div>
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-              <EquipmentOverview />
-            </div>
-
-            {/* Sticky CTA */}
-            <div className="flex-shrink-0 p-4 bg-white border-t border-gray-200">
-              <Button onClick={() => setShowEquipmentModal(false)} fullWidth className="h-12 text-base font-semibold">
-                Got it, close
-              </Button>
-            </div>
-          </div>
-        </div>}
+      {showEquipmentModal && <EquipmentModalContent onClose={() => setShowEquipmentModal(false)} />}
 
       {/* Bottom Navigation - Hide when modals are open, show on setup/profile/help pages always, on home page show unless sticky CTA is active */}
       {!anyModalOpen && !showEquipmentModal && (
@@ -153,4 +187,33 @@ export function App() {
       ) && <BottomNav active={currentView} onNavigate={setCurrentView} />}
     </div>
   </PhoneFrame>;
+}
+
+export function App() {
+  const [showOnboarding, setShowOnboarding] = useState(true);
+  
+  // Check if onboarding was already completed
+  useEffect(() => {
+    const onboardingCompleted = localStorage.getItem('nielsen-onboarding-completed');
+    if (onboardingCompleted === 'true') {
+      setShowOnboarding(false);
+    }
+  }, []);
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem('nielsen-onboarding-completed', 'true');
+    setShowOnboarding(false);
+  };
+
+  if (showOnboarding) {
+    return <PhoneFrame>
+      <OnboardingPage onComplete={handleOnboardingComplete} />
+    </PhoneFrame>;
+  }
+
+  return (
+    <NavigationProvider initialView="home">
+      <AppContent />
+    </NavigationProvider>
+  );
 }

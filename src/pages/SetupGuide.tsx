@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { WelcomeScreen } from '../components/WelcomeScreen';
 import { HowItWorks } from '../components/HowItWorks';
 import { EquipmentOverview } from '../components/EquipmentOverview';
@@ -17,6 +17,7 @@ import { Button } from '../components/ui/Button';
 import { setupTasksConfig, getIllustration, getMilestoneOrder, MilestoneId } from '../utils/setupTasksConfig';
 import { BoxPreviewCard } from '../components/BoxPreviewCard';
 import { mockHouseholdConfig } from '../types/household';
+import { useSwipeGesture } from '../hooks/useSwipeGesture';
 // Convert JSON config to StepData format with React components
 function getStepsForMilestone(milestoneId: MilestoneId): StepData[] {
   const milestone = setupTasksConfig.milestones.find(m => m.id === milestoneId);
@@ -51,9 +52,11 @@ function getStepsForMilestone(milestoneId: MilestoneId): StepData[] {
 type ViewState = 'journey' | 'step' | 'phase2' | 'evaluation' | 'recheck' | 'recheck-confirm' | 'final-support' | 'validate-setup';
 type TransitionState = 'none' | 'celebrating' | 'loading';
 export function SetupGuide({
-  onModalStateChange
+  onModalStateChange,
+  onBackNavigation
 }: {
   onModalStateChange: (isOpen: boolean) => void;
+  onBackNavigation?: () => void;
 }) {
   // Start directly at journey (removed 'equipment' view)
   const [view, setView] = useState<ViewState>('journey');
@@ -253,6 +256,53 @@ export function SetupGuide({
     setView('journey');
     setCurrentMilestone(null);
   };
+
+  // Handle back navigation with priority: modals first, then step navigation
+  const handleBackNavigation = useCallback(() => {
+    // Priority 1: Close equipment modal if open
+    if (showEquipmentModal) {
+      setShowEquipmentModal(false);
+      return;
+    }
+
+    // Priority 2: Step navigation (within SetupGuide)
+    if (view === 'step') {
+      if (currentStepIndex > 0) {
+        setCurrentStepIndex(prev => prev - 1);
+      } else {
+        setView('journey');
+        setCurrentMilestone(null);
+      }
+      return;
+    }
+    if (view === 'recheck-confirm' || view === 'recheck') {
+      setView('journey');
+      return;
+    }
+    if (view === 'evaluation' || view === 'validate-setup') {
+      setView('journey');
+      return;
+    }
+    if (view === 'final-support') {
+      setView('journey');
+      return;
+    }
+    if (view === 'phase2') {
+      setView('journey');
+      return;
+    }
+    
+    // Priority 3: If in journey, delegate to parent (go to home)
+    if (view === 'journey' && onBackNavigation) {
+      onBackNavigation();
+    }
+  }, [view, showEquipmentModal, onBackNavigation, currentStepIndex]);
+
+  // Add swipe gesture detection
+  const swipeRef = useSwipeGesture({
+    onSwipeLeft: handleBackNavigation,
+    enabled: true
+  });
   
   // Handle transition completion (either auto or manual)
   const handleTransitionComplete = (nextMilestone: MilestoneId | undefined) => {
@@ -313,7 +363,7 @@ export function SetupGuide({
       // Could auto-advance to phase2 or show completion button
     }
   }, [view, allRequiredDone]);
-  return <div className="pb-12 w-full box-border">
+  return <div ref={swipeRef} className="pb-12 w-full box-border">
       {view === 'journey' && <div className="space-y-8 w-full">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">

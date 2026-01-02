@@ -5,6 +5,7 @@ import { Package, Tv, Wifi, ChevronDown, X } from 'lucide-react';
 import { HouseholdConfig } from '../types/household';
 import { getBoxOrganization } from '../utils/boxOrganization';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSwipeGesture } from '../hooks/useSwipeGesture';
 import { 
   NanoMeterIcon, 
   RemoteIcon, 
@@ -61,6 +62,12 @@ export function BoxPreviewCard({
       return newSet;
     });
   };
+
+  // Add swipe gesture to close modal
+  const modalSwipeRef = useSwipeGesture({
+    onSwipeLeft: () => setShowBoxModal(false),
+    enabled: showBoxModal
+  });
 
   return (
     <motion.div
@@ -127,6 +134,7 @@ export function BoxPreviewCard({
             onClick={() => setShowBoxModal(false)}
           >
             <motion.div
+              ref={modalSwipeRef}
               initial={{ y: '100%' }}
               animate={{ y: 0 }}
               exit={{ y: '100%' }}

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Button } from './ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSwipeGesture } from '../hooks/useSwipeGesture';
 
 interface SectionEditModalProps {
   isOpen: boolean;
@@ -30,6 +31,12 @@ export function SectionEditModal({
     }
   }, [isOpen, onModalStateChange]);
 
+  // Add swipe gesture to close modal
+  const swipeRef = useSwipeGesture({
+    onSwipeLeft: onClose,
+    enabled: isOpen
+  });
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -46,6 +53,7 @@ export function SectionEditModal({
 
           {/* Modal - Opens from bottom */}
           <motion.div
+            ref={swipeRef}
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
