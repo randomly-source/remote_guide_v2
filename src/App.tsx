@@ -3,7 +3,7 @@ import { HomePage } from './pages/HomePage';
 import { SetupGuide } from './pages/SetupGuide';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { BottomNav } from './components/BottomNav';
-import { DetailsVerification } from './components/DetailsVerification';
+import { ProfileConfirmation } from './components/ProfileConfirmation';
 import { EquipmentOverview } from './components/EquipmentOverview';
 import { PhoneFrame } from './components/PhoneFrame';
 import { Card } from './components/ui/Card';
@@ -64,10 +64,7 @@ export function App() {
         {currentView === 'setup' && <SetupGuide onModalStateChange={setAnyModalOpen} />}
 
         {currentView === 'profile' && <div className="pb-24">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
-              Your Profile
-            </h1>
-            <DetailsVerification />
+            <ProfileConfirmation onModalStateChange={setAnyModalOpen} />
           </div>}
 
         {currentView === 'help' && <div className="pb-24">

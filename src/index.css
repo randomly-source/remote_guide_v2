@@ -19,6 +19,17 @@
     overflow-x: hidden; /* Prevent horizontal scrolling */
   }
   
+  /* Text selection styles */
+  ::selection {
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
+  }
+  
+  ::-moz-selection {
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
+  }
+  
   /* Ensure proper padding on mobile */
   @media (max-width: 640px) {
     body {
