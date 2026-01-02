@@ -58,7 +58,7 @@ This file contains all user-facing text content organized by screen/component wi
 - **Location**: `src/components/EmailOTP.tsx`
 
 - **ID**: `onboarding_resend_cooldown`
-- **Content**: "Resend code ({resendCooldown}s)"
+- **Content**: "Resend ({resendCooldown}s)"
 - **Location**: `src/components/EmailOTP.tsx`
 
 ### Slide 1: Welcome
@@ -344,6 +344,10 @@ This file contains all user-facing text content organized by screen/component wi
 
 - **ID**: `home_how_it_works_modal_title`
 - **Content**: "How Your Nielsen System Works"
+- **Location**: `src/components/CompactHomeSections.tsx`
+
+- **ID**: `home_how_it_works_modal_section_title`
+- **Content**: "The Complete Process"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
 - **ID**: `home_how_it_works_modal_step1_title`
@@ -725,19 +729,19 @@ This file contains all user-facing text content organized by screen/component wi
 ### Setup Journey Header
 - **ID**: `setup_journey_title`
 - **Content**: "Your Setup Tasks"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/components/SetupJourney.tsx`
 
 - **ID**: `setup_journey_time_badge`
 - **Content**: "~30 min"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/components/SetupJourney.tsx`
 
 - **ID**: `setup_journey_subtitle`
 - **Content**: "Complete these milestones to finish Phase 1."
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/components/SetupJourney.tsx`
 
 - **ID**: `setup_journey_progress_text`
 - **Content**: "{completedRequiredCount} of {requiredCount} required tasks complete"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/components/SetupJourney.tsx`
 
 ### Setup Journey Intro Card
 - **ID**: `setup_journey_intro_title`
@@ -764,6 +768,10 @@ This file contains all user-facing text content organized by screen/component wi
 - **Content**: "Peek inside to see what you should have received"
 - **Location**: `src/pages/SetupGuide.tsx`
 
+- **ID**: `setup_journey_title_main`
+- **Content**: "Let's Get You Set Up"
+- **Location**: `src/pages/SetupGuide.tsx`
+
 ### Task Status Labels
 - **ID**: `setup_task_recheck_badge`
 - **Content**: "Requires Recheck"
@@ -780,11 +788,15 @@ This file contains all user-facing text content organized by screen/component wi
 ### Setup Step Modal
 - **ID**: `setup_step_verification_title`
 - **Content**: "Verify Your Setup"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/pages/SetupGuide.tsx` (dynamically added as last step)
 
 - **ID**: `setup_step_verification_description`
 - **Content**: "Take a moment to verify that everything looks correct. Compare your setup with the image below to ensure everything is properly connected and positioned."
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/pages/SetupGuide.tsx` (dynamically added as last step)
+
+- **ID**: `setup_step_verification_image_label`
+- **Content**: "Final Setup View"
+- **Location**: `src/pages/SetupGuide.tsx` (shown in verification step illustration)
 
 - **ID**: `setup_step_next_button`
 - **Content**: "Next"
@@ -1079,11 +1091,11 @@ This file contains all user-facing text content organized by screen/component wi
 
 - **ID**: `equipment_modal_title`
 - **Content**: "What's in the Box?"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/pages/SetupGuide.tsx` and `src/App.tsx`
 
 - **ID**: `equipment_modal_close`
 - **Content**: "Got it, close"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/pages/SetupGuide.tsx` and `src/App.tsx`
 
 ---
 
@@ -1113,6 +1125,54 @@ This file contains all user-facing text content organized by screen/component wi
 - **Content**: "Nielsen"
 - **Location**: `src/App.tsx`
 
+## HELP SCREEN
+
+- **ID**: `help_title`
+- **Content**: "Need Help?"
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_description`
+- **Content**: "We're here to support you every step of the way."
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_call_title`
+- **Content**: "Call Us"
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_call_description`
+- **Content**: "Speak with a Nielsen specialist right now."
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_call_number`
+- **Content**: "1-800-NIELSEN"
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_chat_title`
+- **Content**: "Live Chat"
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_chat_description`
+- **Content**: "Get instant answers to your questions."
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_chat_button`
+- **Content**: "Start Chat"
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_quick_tip_title`
+- **Content**: "Quick Tip"
+- **Location**: `src/App.tsx`
+
+- **ID**: `help_quick_tip_content`
+- **Content**: "Short on time? Click \"Save Progress\" on any setup screen. We'll text you a link to pick up exactly where you left off."
+- **Location**: `src/App.tsx`
+
+## PROFILE SCREEN
+
+- **ID**: `profile_title`
+- **Content**: "Your Profile"
+- **Location**: `src/App.tsx`
+
 ---
 
 ## SETUP TASKS CONFIG
@@ -1121,16 +1181,48 @@ All task titles, descriptions, and tips are defined in:
 - **Location**: `src/config/setupTasks.json`
 
 The following tasks are configured:
-- Living Room Setup (with steps: box, nano-place, power-sensor, remote)
-- The Hub (with steps: hub-place, hub-plug)
-- Streaming Meter (with steps: stream-place, stream-connect, stream-power)
-- Bedroom TV (with steps: bed-box, bed-nano)
+
+### Living Room Setup
+- **ID**: `living-room`
+- **Title**: "Living Room Setup"
+- **Subtitle**: "Nano Meter, Remote, Power Sensor"
+- **Steps**:
+  - `box`: "Find the Living Room Box" - "Locate the box labeled \"Living Room\". It contains the Nano Meter, Remote, and Power Sensor."
+  - `nano-place`: "Place the Nano Meter" - "Position the Nano Meter next to your TV. It needs to \"hear\" the audio clearly." (Tip: "Make sure it is not blocked by soundbars or decorations.")
+  - `power-sensor`: "Connect Power Sensor" - "Plug your TV power cord into the Nielsen Power Sensor, then plug the Sensor into the wall." (Tip: "This helps us know exactly when the TV is on or off.")
+  - `remote`: "Place the Remote" - "Set the People Meter Remote near the Nano Meter for easy access."
+
+### The Hub
+- **ID**: `hub`
+- **Title**: "The Hub"
+- **Subtitle**: "Cellular backup connection"
+- **Steps**:
+  - `hub-place`: "Find a Central Spot" - "Choose a location central to all your TVs where you get good cell signal." (Tip: "Avoid placing it in a cabinet or behind furniture.")
+  - `hub-plug`: "Plug it In" - "Connect the Hub to a power outlet. Look for the blinking lights indicating it has power." (Tip: "Do not use an outlet controlled by a light switch.")
+
+### Streaming Meter
+- **ID**: `streaming`
+- **Title**: "Streaming Meter"
+- **Subtitle**: "WiFi router connection"
+- **Steps**:
+  - `stream-place`: "Next to Router" - "Place the Streaming Meter next to your home WiFi router."
+  - `stream-connect`: "Connect Ethernet" - "Plug the attached ethernet cable into any open port on your router."
+  - `stream-power`: "Power Up" - "Plug the power adapter into a wall outlet. Green lights will flash when ready."
+
+### Bedroom TV
+- **ID**: `bedroom`
+- **Title**: "Bedroom TV"
+- **Subtitle**: "Second TV setup"
+- **Steps**:
+  - `bed-box`: "Find Bedroom Box" - "Locate the box labeled \"Bedroom\"."
+  - `bed-nano`: "Setup Nano Meter" - "Just like the living room, place the Nano Meter near the TV."
 
 Each task has:
 - `id`: Unique identifier
 - `title`: Task title
-- `description`: Task description
 - `subtitle`: Task subtitle
+- `iconType`: Icon type for display
+- `required`: Boolean indicating if task is required
 - `steps`: Array of step objects with:
   - `id`: Step identifier
   - `title`: Step title
