@@ -15,6 +15,8 @@ import { Clock, Package, ArrowRight, X, CheckCircle2 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { setupTasksConfig, getIllustration, getMilestoneOrder, MilestoneId } from '../utils/setupTasksConfig';
+import { BoxPreviewCard } from '../components/BoxPreviewCard';
+import { mockHouseholdConfig } from '../types/household';
 // Convert JSON config to StepData format with React components
 function getStepsForMilestone(milestoneId: MilestoneId): StepData[] {
   const milestone = setupTasksConfig.milestones.find(m => m.id === milestoneId);
@@ -318,67 +320,11 @@ export function SetupGuide({
               Let's Get You Set Up
             </h1>
 
-            {/* Engaging intro card */}
-            <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-100 mb-4">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#4A90E2] flex items-center justify-center shrink-0">
-                  <Package className="w-5 h-5 text-white" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-start justify-between gap-3 mb-2">
-                    <h3 className="font-bold text-gray-900">
-                      You should receive a shipment from Nielsen
-                    </h3>
-                    {/* Time Badge */}
-                  </div>
-                  <p className="text-sm text-gray-700 leading-relaxed mb-3">
-                    Unbox it and follow along with the simple steps below. It's
-                    easy—you've got this! 💪
-                  </p>
-                  <div className="flex items-center gap-2 text-xs text-gray-600">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span className="font-medium">
-                      Each task takes just a few minutes
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            {/* Time Expectation */}
+            {/* Combined Box Preview Card */}
+            <BoxPreviewCard
+              householdConfig={mockHouseholdConfig}
+            />
           </div>
-
-          {/* Equipment Preview Card - Opens Modal */}
-          <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        delay: 0.1
-      }}>
-            <button onClick={() => setShowEquipmentModal(true)} className="w-full group">
-              <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200 cursor-pointer hover:shadow-lg transition-all">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-[#4A90E2] flex items-center justify-center">
-                      <Package className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="text-left">
-                      <h3 className="font-bold text-gray-900 text-sm mb-0.5">
-                        What's in Your Box
-                      </h3>
-                      <p className="text-xs text-gray-600">
-                        Peek inside to see what you should have received
-                      </p>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-[#4A90E2] group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Card>
-            </button>
-          </motion.div>
 
           {/* Appreciation Message - appears after completing a milestone or choosing Sarah help */}
           <AnimatePresence>

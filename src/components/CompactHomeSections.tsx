@@ -3,7 +3,7 @@ import { Card } from './ui/Card';
 import { Button } from './ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePhoneFrame } from './PhoneFrame';
-import { Award, Shield, Users, TrendingUp, Tv, Wifi, Lock, EyeOff, Clock, CheckCircle, ArrowRight, Zap, ChevronDown, Play, X, Phone } from 'lucide-react';
+import { Award, Shield, Users, TrendingUp, Tv, Wifi, Lock, EyeOff, Clock, CheckCircle, ArrowRight, Zap, ChevronDown, Play, X, Phone, Star, Target } from 'lucide-react';
 // ========================================
 // VIDEO CONFIGURATION
 // ========================================
@@ -52,8 +52,21 @@ export function CompactHomeSections({
 }: CompactHomeSectionsProps) {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const triggerRef = useRef<HTMLDivElement>(null);
   const { scrollContainerRef, isInFrame } = usePhoneFrame();
+  
+  const toggleCard = (cardId: string) => {
+    setExpandedCards(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(cardId)) {
+        newSet.delete(cardId);
+      } else {
+        newSet.add(cardId);
+      }
+      return newSet;
+    });
+  };
   // Detect video type
   const videoInfo = getVideoEmbedUrl(VIDEO_CONFIG.videoUrl);
   useEffect(() => {
@@ -90,7 +103,7 @@ export function CompactHomeSections({
     onStickyCTAChange?.(showStickyCTA);
   }, [showStickyCTA, onStickyCTAChange]);
   return <>
-      {/* PART 1: Why Nielsen - Compact Trust Section */}
+      {/* PART 1: Why Being a Nielsen Household Matters - Value Proposition */}
       <div className="mb-10">
         <motion.div initial={{
         opacity: 0,
@@ -100,15 +113,14 @@ export function CompactHomeSections({
         y: 0
       }} className="text-center mb-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            Why Nielsen?
+            Why Being a Nielsen Household Matters
           </h2>
-          <p className="text-gray-600 text-sm max-w-2xl mx-auto">
-            100+ years trusted by networks and 42K+ households. Your viewing
-            shapes entertainment.
+          <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
+            You're part of a select group making a real impact on entertainment
           </p>
         </motion.div>
 
-        {/* Compact Stats - 2 rows on mobile, 1 row on desktop */}
+        {/* Value Proposition Cards */}
         <motion.div initial={{
         opacity: 0,
         y: 20
@@ -117,31 +129,142 @@ export function CompactHomeSections({
         y: 0
       }} transition={{
         delay: 0.05
-      }} className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-          <div className="text-center p-3 bg-white rounded-xl border border-gray-100">
-            <Award className="w-6 h-6 text-[#4A90E2] mx-auto mb-1" />
-            <p className="text-lg font-bold text-gray-900">100+</p>
-            <p className="text-xs text-gray-600">Years</p>
-          </div>
-          <div className="text-center p-3 bg-white rounded-xl border border-gray-100">
-            <Users className="w-6 h-6 text-green-500 mx-auto mb-1" />
-            <p className="text-lg font-bold text-gray-900">42K+</p>
-            <p className="text-xs text-gray-600">Households</p>
-          </div>
-          <div className="text-center p-3 bg-white rounded-xl border border-gray-100">
-            <Shield className="w-6 h-6 text-purple-500 mx-auto mb-1" />
-            <p className="text-lg font-bold text-gray-900">100%</p>
-            <p className="text-xs text-gray-600">Private</p>
-          </div>
-          <div className="text-center p-3 bg-white rounded-xl border border-gray-100">
-            <Zap className="w-6 h-6 text-amber-500 mx-auto mb-1" />
-            <p className="text-lg font-bold text-gray-900">$$$</p>
-            <p className="text-xs text-gray-600">Rewards</p>
-          </div>
+      }} className="space-y-4">
+          {/* Card 1: You Represent Thousands */}
+          <Card 
+            className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => toggleCard('card1')}
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center shrink-0 shadow-lg">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-gray-900 text-lg">
+                    You Represent Thousands
+                  </h3>
+                  <motion.div
+                    animate={{ rotate: expandedCards.has('card1') ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="shrink-0 mt-1"
+                  >
+                    <ChevronDown className="w-5 h-5 text-gray-500" />
+                  </motion.div>
+                </div>
+                <AnimatePresence initial={false}>
+                  {expandedCards.has('card1') && (
+                    <motion.p
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-sm sm:text-base text-gray-700 leading-relaxed overflow-hidden"
+                    >
+                      Your household represents thousands of similar families. Networks and advertisers rely on your viewing habits to make billion-dollar decisions about what shows get made, renewed, and canceled.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+                {!expandedCards.has('card1') && (
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    Your household represents thousands of similar families...
+                  </p>
+                )}
+              </div>
+            </div>
+          </Card>
+
+          {/* Card 2: Your Voice Shapes What Gets Made */}
+          <Card 
+            className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => toggleCard('card2')}
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-purple-500 flex items-center justify-center shrink-0 shadow-lg">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-gray-900 text-lg">
+                    Your Voice Shapes What Gets Made
+                  </h3>
+                  <motion.div
+                    animate={{ rotate: expandedCards.has('card2') ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="shrink-0 mt-1"
+                  >
+                    <ChevronDown className="w-5 h-5 text-gray-500" />
+                  </motion.div>
+                </div>
+                <AnimatePresence initial={false}>
+                  {expandedCards.has('card2') && (
+                    <motion.p
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-sm sm:text-base text-gray-700 leading-relaxed overflow-hidden"
+                    >
+                      What you watch influences what gets made. You're part of a select group representing millions of viewers across America, helping shape the future of entertainment.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+                {!expandedCards.has('card2') && (
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    What you watch influences what gets made...
+                  </p>
+                )}
+              </div>
+            </div>
+          </Card>
+
+          {/* Card 3: Pride in Being Chosen */}
+          <Card 
+            className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200 cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => toggleCard('card3')}
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-amber-500 flex items-center justify-center shrink-0 shadow-lg">
+                <Star className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-gray-900 text-lg">
+                    Pride in Being Chosen
+                  </h3>
+                  <motion.div
+                    animate={{ rotate: expandedCards.has('card3') ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="shrink-0 mt-1"
+                  >
+                    <ChevronDown className="w-5 h-5 text-gray-500" />
+                  </motion.div>
+                </div>
+                <AnimatePresence initial={false}>
+                  {expandedCards.has('card3') && (
+                    <motion.p
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-sm sm:text-base text-gray-700 leading-relaxed overflow-hidden"
+                    >
+                      You've been selected to be part of an exclusive group. Only 42,000 households across America have this opportunity. Your participation makes a real difference in how entertainment is created and distributed.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+                {!expandedCards.has('card3') && (
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    You've been selected to be part of an exclusive group...
+                  </p>
+                )}
+              </div>
+            </div>
+          </Card>
         </motion.div>
       </div>
 
-      {/* PART 2: How It Works - Clickable Video Thumbnail */}
+      {/* PART 2: Why Should You Trust Nielsen - How It Works */}
       <div ref={triggerRef} className="mb-10">
         <motion.div initial={{
         opacity: 0,
@@ -151,10 +274,10 @@ export function CompactHomeSections({
         y: 0
       }} className="text-center mb-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            How It Works
+            Why Should You Trust Nielsen
           </h2>
-          <p className="text-gray-600 text-sm">
-            Simple, secure, and completely private
+          <p className="text-gray-600 text-sm sm:text-base">
+            How Your Meters Work at Home
           </p>
         </motion.div>
 
@@ -388,119 +511,6 @@ export function CompactHomeSections({
             </motion.div>
           </motion.div>}
       </AnimatePresence>
-
-      {/* PART 3: What to Expect - Route Map */}
-      <div className="mb-8">
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} className="text-center mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            What to Expect
-          </h2>
-        </motion.div>
-
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        delay: 0.05
-      }} className="mb-6">
-          {/* Route Map */}
-          <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-blue-100">
-            <div className="relative">
-              {/* Connecting Line */}
-              <div className="absolute left-[19px] top-8 bottom-8 w-0.5 bg-gradient-to-b from-blue-400 via-green-400 to-purple-400"></div>
-
-              <div className="space-y-6 relative">
-                {/* Stop 1: Today */}
-                <div className="flex items-start gap-4">
-                  <div className="relative z-10 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center shrink-0 shadow-lg">
-                    <Clock className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1 pt-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-gray-900 text-sm">Today</h3>
-                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">
-                        ~30 min
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-700">
-                      Complete equipment setup with our step-by-step guide
-                    </p>
-                  </div>
-                </div>
-
-                {/* Stop 2: Calibration Call */}
-                <div className="flex items-start gap-4">
-                  <div className="relative z-10 w-10 h-10 rounded-full bg-green-500 flex items-center justify-center shrink-0 shadow-lg">
-                    <Phone className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1 pt-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-gray-900 text-sm">
-                        Next: [Date]
-                      </h3>
-                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
-                        Call
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-700">
-                      Your Nielsen rep calls to calibrate and verify meters are
-                      reading correctly
-                    </p>
-                  </div>
-                </div>
-
-                {/* Stop 3: You're Live */}
-                <div className="flex items-start gap-4">
-                  <div className="relative z-10 w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center shrink-0 shadow-lg">
-                    <CheckCircle className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1 pt-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-gray-900 text-sm">
-                        You're Live!
-                      </h3>
-                      <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">
-                        Ongoing
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-700">
-                      Watch TV normally, press your remote button, and earn
-                      monthly rewards
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-
-          {/* Your Contribution - Compact */}
-          <Card className="bg-white border-gray-200 mt-3">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center shrink-0">
-                <TrendingUp className="w-4 h-4 text-purple-600" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-gray-900 text-xs mb-1">
-                  Your Impact
-                </h3>
-                <p className="text-xs text-gray-600 leading-relaxed">
-                  Your viewing data contributes to Nielsen's national TV
-                  ratings, helping shape the future of entertainment.
-                </p>
-              </div>
-            </div>
-          </Card>
-        </motion.div>
-      </div>
 
       {/* Sticky CTA */}
       <AnimatePresence>

@@ -284,65 +284,110 @@ This file contains all user-facing text content organized by screen/component wi
 - **Content**: "Your Nielsen specialist will call you soon to verify everything is working perfectly."
 - **Location**: `src/components/ProgressBasedHero.tsx`
 
-### Why Nielsen Section
-- **ID**: `home_why_nielsen_title`
-- **Content**: "Why Nielsen?"
+### Welcome Hero (First Fold)
+- **ID**: `welcome_hero_title`
+- **Content**: "Hi {userName}, Welcome to the Nielsen Family"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_subtitle`
+- **Content**: "Before your call with {prsName}, your Nielsen Representative, let's get some things sorted if you have 30 minutes."
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_next_steps_title`
+- **Content**: "Here's What to Expect"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step1_title`
+- **Content**: "Today"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step1_time`
+- **Content**: "~30 min"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step1_description`
+- **Content**: "Complete equipment setup with our step-by-step guide"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step2_title`
+- **Content**: "Next: {callDate}"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step2_badge`
+- **Content**: "Call"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step2_description`
+- **Content**: "Your Nielsen rep calls to calibrate and verify meters are reading correctly"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step3_title`
+- **Content**: "You're Live!"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step3_badge`
+- **Content**: "Ongoing"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_step3_description`
+- **Content**: "Watch TV normally, press your remote button, and earn monthly rewards"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+- **ID**: `welcome_hero_cta`
+- **Content**: "Let's Get Started"
+- **Location**: `src/components/WelcomeHero.tsx`
+
+### Why Being a Nielsen Household Matters Section
+- **ID**: `home_value_title`
+- **Content**: "Why Being a Nielsen Household Matters"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_description`
-- **Content**: "100+ years trusted by networks and 42K+ households. Your viewing shapes entertainment."
+- **ID**: `home_value_description`
+- **Content**: "You're part of a select group making a real impact on entertainment"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_stat1_value`
-- **Content**: "100+"
+- **ID**: `home_value_card1_title`
+- **Content**: "You Represent Thousands"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_stat1_label`
-- **Content**: "Years"
+- **ID**: `home_value_card1_description`
+- **Content**: "Your household represents thousands of similar families. Networks and advertisers rely on your viewing habits to make billion-dollar decisions about what shows get made, renewed, and canceled."
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_stat2_value`
-- **Content**: "42K+"
+- **ID**: `home_value_card2_title`
+- **Content**: "Your Voice Shapes What Gets Made"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_stat2_label`
-- **Content**: "Households"
+- **ID**: `home_value_card2_description`
+- **Content**: "What you watch influences what gets made. You're part of a select group representing millions of viewers across America, helping shape the future of entertainment."
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_stat3_value`
-- **Content**: "100%"
+- **ID**: `home_value_card3_title`
+- **Content**: "Pride in Being Chosen"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_stat3_label`
-- **Content**: "Private"
+- **ID**: `home_value_card3_description`
+- **Content**: "You've been selected to be part of an exclusive group. Only 42,000 households across America have this opportunity. Your participation makes a real difference in how entertainment is created and distributed."
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_stat4_value`
-- **Content**: "$$$"
+### Why Should You Trust Nielsen Section (How It Works)
+- **ID**: `home_trust_title`
+- **Content**: "Why Should You Trust Nielsen"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_why_nielsen_stat4_label`
-- **Content**: "Rewards"
+- **ID**: `home_trust_subtitle`
+- **Content**: "How Your Meters Work at Home"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-### How It Works Section
-- **ID**: `home_how_it_works_title`
-- **Content**: "How It Works"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_how_it_works_description`
-- **Content**: "Simple, secure, and completely private"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_how_it_works_video_text`
+- **ID**: `home_trust_video_text`
 - **Content**: "Watch how your data flows securely from home to Nielsen"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_summary`
+- **ID**: `home_trust_summary`
 - **Content**: "Collect → Encrypt → Anonymize"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_title`
+- **ID**: `home_trust_modal_title`
 - **Content**: "How Your Nielsen System Works"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
@@ -350,102 +395,56 @@ This file contains all user-facing text content organized by screen/component wi
 - **Content**: "The Complete Process"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step1_title`
+- **ID**: `home_trust_modal_step1_title`
 - **Content**: "Step 1: Data Collection"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step1_description`
+- **ID**: `home_trust_modal_step1_description`
 - **Content**: "Your Nielsen meters work quietly in the background to understand what you're watching."
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step1_nano`
+- **ID**: `home_trust_modal_step1_nano`
 - **Content**: "Nano Meter: Listens for audio codes embedded in TV programs (like a digital fingerprint). No cameras, no recording—just audio signatures."
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step1_streaming`
+- **ID**: `home_trust_modal_step1_streaming`
 - **Content**: "Streaming Meter: Tracks what's streamed to your devices. It only sees titles and timestamps—never your passwords or personal browsing."
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step2_title`
+- **ID**: `home_trust_modal_step2_title`
 - **Content**: "Step 2: Secure Transmission"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step2_description`
+- **ID**: `home_trust_modal_step2_description`
 - **Content**: "The Hub sends all data through an encrypted connection—like a secure tunnel that no one can see inside."
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step2_encryption`
+- **ID**: `home_trust_modal_step2_encryption`
 - **Content**: "Bank-level 256-bit encryption protects your data"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step3_title`
+- **ID**: `home_trust_modal_step3_title`
 - **Content**: "Step 3: Anonymization"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step3_description`
+- **ID**: `home_trust_modal_step3_description`
 - **Content**: "Before any analysis, your personal details are completely removed. We only keep anonymous viewing patterns."
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step3_keep`
+- **ID**: `home_trust_modal_step3_keep`
 - **Content**: "✓ What We Keep: Show titles, timestamps, household demographics"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_step3_remove`
+- **ID**: `home_trust_modal_step3_remove`
 - **Content**: "✗ What We Remove: Names, addresses, personal identifiers"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-- **ID**: `home_how_it_works_modal_close`
+- **ID**: `home_trust_modal_close`
 - **Content**: "Got it, close"
 - **Location**: `src/components/CompactHomeSections.tsx`
 
-### What to Expect Section
-- **ID**: `home_what_to_expect_title`
-- **Content**: "What to Expect"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop1_title`
-- **Content**: "Today"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop1_time`
-- **Content**: "~30 min"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop1_description`
-- **Content**: "Complete equipment setup with our step-by-step guide"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop2_title`
-- **Content**: "Next: [Date]"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop2_badge`
-- **Content**: "Call"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop2_description`
-- **Content**: "Your Nielsen rep calls to calibrate and verify meters are reading correctly"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop3_title`
-- **Content**: "You're Live!"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop3_badge`
-- **Content**: "Ongoing"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_stop3_description`
-- **Content**: "Watch TV normally, press your remote button, and earn monthly rewards"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_impact_title`
-- **Content**: "Your Impact"
-- **Location**: `src/components/CompactHomeSections.tsx`
-
-- **ID**: `home_what_to_expect_impact_description`
-- **Content**: "Your viewing data contributes to Nielsen's national TV ratings, helping shape the future of entertainment."
-- **Location**: `src/components/CompactHomeSections.tsx`
+### What to Expect Section (Removed from Home Page - Now in WelcomeHero)
+**Note**: The "What to Expect" timeline has been moved to the WelcomeHero component in the first fold. See Welcome Hero section above for content IDs.
 
 - **ID**: `home_sticky_cta_time`
 - **Content**: "~30 min"
@@ -748,25 +747,38 @@ This file contains all user-facing text content organized by screen/component wi
 - **Content**: "Let's Get You Set Up"
 - **Location**: `src/pages/SetupGuide.tsx`
 
-- **ID**: `setup_journey_intro_card_title`
+### Box Preview Card (Combined)
+- **ID**: `box_preview_shipment_title`
 - **Content**: "You should receive a shipment from Nielsen"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/components/BoxPreviewCard.tsx`
 
-- **ID**: `setup_journey_intro_card_description`
+- **ID**: `box_preview_shipment_description`
 - **Content**: "Unbox it and follow along with the simple steps below. It's easy—you've got this! 💪"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/components/BoxPreviewCard.tsx`
 
-- **ID**: `setup_journey_intro_card_time`
+- **ID**: `box_preview_shipment_time`
 - **Content**: "Each task takes just a few minutes"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **Location**: `src/components/BoxPreviewCard.tsx`
 
-- **ID**: `setup_journey_equipment_card_title`
-- **Content**: "What's in Your Box"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **ID**: `box_preview_household_section_title`
+- **Content**: "Here's what you told us"
+- **Location**: `src/components/BoxPreviewCard.tsx`
 
-- **ID**: `setup_journey_equipment_card_description`
-- **Content**: "Peek inside to see what you should have received"
-- **Location**: `src/pages/SetupGuide.tsx`
+- **ID**: `box_preview_organization_section_title`
+- **Content**: "Here's how we have organised your meters"
+- **Location**: `src/components/BoxPreviewCard.tsx`
+
+- **ID**: `box_preview_room_box_badge`
+- **Content**: "Room Box"
+- **Location**: `src/components/BoxPreviewCard.tsx`
+
+- **ID**: `box_preview_cta_title`
+- **Content**: "See what's in my box"
+- **Location**: `src/components/BoxPreviewCard.tsx`
+
+- **ID**: `box_preview_cta_description`
+- **Content**: "View detailed equipment overview"
+- **Location**: `src/components/BoxPreviewCard.tsx`
 
 - **ID**: `setup_journey_title_main`
 - **Content**: "Let's Get You Set Up"

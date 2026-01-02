@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HeroCarousel } from '../components/HeroCarousel';
+import { WelcomeHero } from '../components/WelcomeHero';
 import { ProgressBasedHero } from '../components/ProgressBasedHero';
 import { CompactHomeSections } from '../components/CompactHomeSections';
 import { PRSProfile } from '../components/PRSProfile';
@@ -27,13 +27,22 @@ export function HomePage({
       setHasProgress(milestones.length > 0);
     }
   }, []);
-  return <div className="pb-32">
-      {/* Hero - Show progress-based hero if user has started, otherwise show carousel */}
-      <ProgressBasedHero onContinueSetup={onStartSetup} />
-      {!hasProgress && <HeroCarousel />}
+  // PRS info - can be made dynamic later
+  const prsName = 'Sarah';
+  const callDate = 'Thursday, Jan 25';
+  const userName = 'Roger'; // Can be made dynamic later
 
-      {/* Divider */}
-      <div className="my-8 border-t border-gray-200"></div>
+  return <div className="pb-32">
+      {/* Hero - Show progress-based hero if user has started, otherwise show welcome hero */}
+      <ProgressBasedHero onContinueSetup={onStartSetup} />
+      {!hasProgress && (
+        <WelcomeHero 
+          onStartSetup={onStartSetup}
+          userName={userName}
+          prsName={prsName}
+          callDate={callDate}
+        />
+      )}
 
       {/* All Three Sections - Compact Version */}
       <CompactHomeSections onStartSetup={onStartSetup} onModalStateChange={onModalStateChange} onStickyCTAChange={onStickyCTAChange} />
