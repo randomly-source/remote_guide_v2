@@ -68,8 +68,7 @@ export function PhoneFrame({ children }: PhoneFrameProps) {
                 {/* Screen Content with safe area for notch - This is the positioning context */}
                 <div 
                   ref={scrollContainerRef}
-                  className="phone-frame-content w-full h-full overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent relative"
-                  style={{ scrollbarWidth: 'thin' }}
+                  className="phone-frame-content w-full h-full overflow-y-auto overflow-x-hidden relative"
                 >
                   {/* Content wrapper - sticky elements will stick relative to this container */}
                   <div className="pt-[45px] min-h-full flex flex-col">

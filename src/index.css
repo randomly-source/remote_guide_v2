@@ -77,7 +77,18 @@
 
 /* Phone Frame Styles */
 @layer utilities {
-  /* Custom scrollbar for phone frame content */
+  /* Hide scrollbar for phone frame content while keeping scroll functionality */
+  .phone-frame-content {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  .phone-frame-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  
+  /* Custom scrollbar for other components that use scrollbar-thin */
   .scrollbar-thin::-webkit-scrollbar {
     width: 4px;
   }
