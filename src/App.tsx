@@ -16,7 +16,6 @@ export function App() {
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [anyModalOpen, setAnyModalOpen] = useState(false);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
   // Check if onboarding was already completed
   useEffect(() => {
     const onboardingCompleted = localStorage.getItem('nielsen-onboarding-completed');
@@ -25,16 +24,9 @@ export function App() {
     }
   }, []);
 
-  // Track scroll to determine if sticky CTA should hide bottom nav
+  // Reset sticky CTA when leaving home page
   useEffect(() => {
-    if (currentView === 'home') {
-      const handleScroll = () => {
-        setHasScrolled(true);
-      };
-      window.addEventListener('scroll', handleScroll, { once: true });
-      return () => window.removeEventListener('scroll', handleScroll);
-    } else {
-      setHasScrolled(false);
+    if (currentView !== 'home') {
       setShowStickyCTA(false);
     }
   }, [currentView]);
@@ -155,12 +147,12 @@ export function App() {
           </div>
         </div>}
 
-      {/* Bottom Navigation - Hide when modals are open, show on setup/profile/help pages otherwise, on home page show unless modals/sticky CTA are active */}
+      {/* Bottom Navigation - Hide when modals are open, show on setup/profile/help pages always, on home page show unless sticky CTA is active */}
       {!anyModalOpen && !showEquipmentModal && (
         (currentView === 'setup' || 
         currentView === 'profile' || 
         currentView === 'help' || 
-        (currentView === 'home' && (!showStickyCTA || !hasScrolled)))
+        (currentView === 'home' && !showStickyCTA))
       ) && <BottomNav active={currentView} onNavigate={setCurrentView} />}
     </div>
   </PhoneFrame>;

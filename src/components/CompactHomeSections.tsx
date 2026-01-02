@@ -70,15 +70,15 @@ export function CompactHomeSections({
   // Detect video type
   const videoInfo = getVideoEmbedUrl(VIDEO_CONFIG.videoUrl);
   useEffect(() => {
+    let hasUserScrolled = false;
+    
     const handleScroll = () => {
+      hasUserScrolled = true;
       if (triggerRef.current) {
         const rect = triggerRef.current.getBoundingClientRect();
         setShowStickyCTA(rect.top < 73);
       }
     };
-    
-    // Check immediately on mount
-    handleScroll();
     
     // Use scroll container if in frame, otherwise use window
     const scrollTarget = isInFrame && scrollContainerRef?.current 
